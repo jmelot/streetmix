@@ -8,6 +8,7 @@ import { registerKeypress } from '../app/keypress'
 import { trackEvent } from '../app/event_tracking'
 import { showDialog } from '../store/actions/dialogs'
 import './HelpMenu.scss'
+import MenuListItem from './MenuListItem'
 
 class HelpMenu extends React.PureComponent {
   static propTypes = {
@@ -28,18 +29,12 @@ class HelpMenu extends React.PureComponent {
   render () {
     return (
       <Menu onShow={this.onShow} {...this.props}>
-        <a
-          href="#"
-          onClick={this.props.showAboutDialog}
-        >
-          <FormattedMessage id="menu.item.about" defaultMessage="About Streetmix…" />
-        </a>
-        <a
-          href="#"
-          onClick={this.props.showWhatsNewDialog}
-        >
-          <FormattedMessage id="dialogs.whatsnew.heading" defaultMessage="What’s new in Streetmix? [en]&lrm;" />
-        </a>
+        <ul className="menu-item-group">
+          <MenuListItem messageId="menu.item.about" defaultMessage="About Streetmix…"
+            clickHandler={this.props.showAboutDialog} />
+          <MenuListItem messageId="dialogs.whatsnew.heading" defaultMessage="What’s new in Streetmix? [en]&lrm;"
+            clickHandler={this.props.showWhatsNewDialog} />
+        </ul>
         <div className="form non-touch-only help-menu-shortcuts">
           <p>
             <FormattedMessage id="menu.help.keyboard-label" defaultMessage="Keyboard shortcuts:" />

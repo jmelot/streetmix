@@ -14,14 +14,14 @@ export default class MenuListItem extends React.PureComponent {
   }
 
   render () {
-    const linkParams = {
-      'href': this.props.href
-    }
+    const linkParams = {}
     if (this.props.clickHandler === undefined) {
       linkParams['target'] = '_blank'
       linkParams['rel'] = 'noopener noreferrer'
+      linkParams['href'] = this.props.href
     } else {
       linkParams['onClick'] = this.props.clickHandler
+      linkParams['href'] = '#'
     }
     return (
       <li>

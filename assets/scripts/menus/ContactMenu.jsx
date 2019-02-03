@@ -27,7 +27,7 @@ class ContactMenu extends React.PureComponent {
             defaultMessage="View source code on GitHub" />
           <MenuListItem href="https://twitter.com/intent/tweet?text=@streetmix" icon="twitter"
             messageId="menu.contact.twitter" defaultMessage="Send a tweet to @streetmix" />
-          <MenuListItem href="#" messageId="menu.contact.minecraft" defaultMessage="Play Minecraft with us!&lrm;"
+          <MenuListItem messageId="menu.contact.minecraft" defaultMessage="Play Minecraft with us!&lrm;"
             clickHandler={this.props.showMinecraftDialog} />
         </ul>
       </Menu>
