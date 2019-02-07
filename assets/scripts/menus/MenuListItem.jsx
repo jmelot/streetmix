@@ -10,6 +10,7 @@ export default class MenuListItem extends React.PureComponent {
     icon: PropTypes.string,
     messageId: PropTypes.string,
     defaultMessage: PropTypes.string,
+    subtextMessage: PropTypes.string,
     messageClassName: PropTypes.string,
     children: PropTypes.node
   }
@@ -31,15 +32,20 @@ export default class MenuListItem extends React.PureComponent {
     }
     return (
       <li className={'menu-list-item' + itemStyle}>
-        <a {...linkParams} className={this.props.isHeader ? 'menu-header' : ''}>
-          {this.props.icon !== undefined &&
-            <Icon icon={this.props.icon} />
-          }
-          <span>
+        {this.props.messageId &&
+          <a {...linkParams} className={this.props.isHeader ? 'menu-header' : ''}>
+            {this.props.icon !== undefined &&
+              <Icon icon={this.props.icon} />
+            }
             <FormattedMessage id={this.props.messageId} defaultMessage={this.props.defaultMessage}
               className={this.props.messageClassName} />
-          </span>
-        </a>
+            {this.props.subtextMessage &&
+              <span className="menu-item-subtext">
+                <FormattedMessage id={this.props.messageId + '-byline'} defaultMessage={this.props.subtextMessage} />
+              </span>
+            }
+          </a>
+        }
         {this.props.children}
       </li>
     )

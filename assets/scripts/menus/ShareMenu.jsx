@@ -3,7 +3,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Menu from './Menu'
-import Icon from '../ui/Icon'
+import MenuListItem from './MenuListItem'
 
 import { FACEBOOK_APP_ID } from '../app/config'
 import { trackEvent } from '../app/event_tracking'
@@ -155,60 +155,45 @@ class ShareMenu extends React.Component {
 
     const signInPromo = (!this.props.signedIn)
       ? (
-        <div className="share-sign-in-promo">
-          <FormattedMessage
-            id="menu.share.sign-in-link"
-            defaultMessage={`{signInLink} for nicer links to your streets and your personal street gallery`}
-            values={{
-              signInLink
-            }}
-          />
-        </div>
+        <MenuListItem>
+          <div className="share-sign-in-promo">
+            <FormattedMessage
+              id="menu.share.sign-in-link"
+              defaultMessage={`{signInLink} for nicer links to your streets and your personal street gallery`}
+              values={{
+                signInLink
+              }}
+            />
+          </div>
+        </MenuListItem>
       ) : null
 
     return (
       <Menu onShow={this.onShow} className="share-menu" {...this.props}>
-        {signInPromo}
-        <div className="share-via-link-container">
-          <FormattedMessage id="menu.share.link" defaultMessage="Copy and paste this link to share:" />
-          <input
-            className="share-via-link"
-            type="text"
-            value={this.state.shareUrl}
-            spellCheck="false"
-            ref={(ref) => { this.shareViaLinkInput = ref }}
-            readOnly
-          />
-        </div>
-        <a
-          className="share-via-twitter"
-          href={twitterLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={this.onClickShareViaTwitter}
-        >
-          <Icon icon="twitter" />
-          <FormattedMessage id="menu.share.twitter" defaultMessage="Share using Twitter" />
-        </a>
-        <a
-          className="share-via-facebook"
-          href={facebookLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={this.onClickShareViaFacebook}
-        >
-          <Icon icon="facebook" />
-          <FormattedMessage id="menu.share.facebook" defaultMessage="Share using Facebook" />
-        </a>
-        <a href="#" onClick={this.onClickPrint}>
-          <FormattedMessage id="menu.share.print" defaultMessage="Print…" />
-        </a>
-        <a id="save-as-image" href="#" onClick={this.onClickSaveAsImage}>
-          <FormattedMessage id="menu.share.save" defaultMessage="Save as image…" />
-          <span className="menu-item-subtext">
-            <FormattedMessage id="menu.share.save-byline" defaultMessage="For including in a report, blog, etc." />
-          </span>
-        </a>
+        <ul className="menu-item-group">
+          {signInPromo}
+          <MenuListItem>
+            <div className="share-via-link-container">
+              <FormattedMessage id="menu.share.link" defaultMessage="Copy and paste this link to share:" />
+              <input
+                className="share-via-link"
+                type="text"
+                value={this.state.shareUrl}
+                spellCheck="false"
+                ref={(ref) => { this.shareViaLinkInput = ref }}
+                readOnly
+              />
+            </div>
+          </MenuListItem>
+          <MenuListItem href={twitterLink} icon="twitter" messageId="menu.share.twitter"
+            defaultMessage="Share using Twitter" clickHandler={this.onClickShareViaTwitter} />
+          <MenuListItem href={facebookLink} icon="facebook" messageId="menu.share.facebook"
+            defaultMessage="Share using Facebook" clickHandler={this.onClickShareViaFacebook} />
+          <MenuListItem messageId="menu.share.print"
+            defaultMessage="Print…" clickHandler={this.onClickPrint} />
+          <MenuListItem id="save-as-image" messageId="menu.share.save" clickHandler={this.onClickSaveAsImage}
+            defaultMessage="Save as image…" subtextMessage="For including in a report, blog, etc." />
+        </ul>
       </Menu>
     )
   }
