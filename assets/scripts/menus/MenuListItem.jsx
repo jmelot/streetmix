@@ -10,6 +10,7 @@ export default class MenuListItem extends React.PureComponent {
     icon: PropTypes.string,
     messageId: PropTypes.string,
     defaultMessage: PropTypes.string,
+    messageClassName: PropTypes.string,
     children: PropTypes.node
   }
 
@@ -23,13 +24,21 @@ export default class MenuListItem extends React.PureComponent {
       linkParams['onClick'] = this.props.clickHandler
       linkParams['href'] = '#'
     }
+    const isClickable = (this.props.clickHandler !== undefined) || (this.props.href !== undefined)
+    let itemStyle = ''
+    if (!this.props.isHeader) {
+      itemStyle = (isClickable ? ' menu-item-clickable' : ' menu-item-plain')
+    }
     return (
-      <li>
-        <a {...linkParams}>
+      <li className={'menu-list-item' + itemStyle}>
+        <a {...linkParams} className={this.props.isHeader ? 'menu-header' : ''}>
           {this.props.icon !== undefined &&
             <Icon icon={this.props.icon} />
           }
-          <FormattedMessage id={this.props.messageId} defaultMessage={this.props.defaultMessage} />
+          <span>
+            <FormattedMessage id={this.props.messageId} defaultMessage={this.props.defaultMessage}
+              className={this.props.messageClassName} />
+          </span>
         </a>
         {this.props.children}
       </li>
